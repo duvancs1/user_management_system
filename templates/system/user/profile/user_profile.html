@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div>
+    <form class="flex flex-col gap-5" hx-post="{% url 'user:user_profile' user.id %}">
+        {% crispy form %}
+    </form>
+</div>
+
+{% endblock content %}

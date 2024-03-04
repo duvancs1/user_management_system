@@ -1,0 +1,7 @@
+{% load crispy_forms_tags %}
+
+<div>
+    <form class="flex flex-col gap-5" hx-post="{% url 'user:update_user' user.id %}">
+        {% crispy form %}
+    </form>
+</div>

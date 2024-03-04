@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="mx-auto bg-white p-6 rounded-md shadow-md mb-0.5">
+    <input id="searchInput" type="text"
+        class="w-full px-4 py-2 bg-gray-200 focus:bg-white border border-gray-300 rounded-md outline-none"
+        placeholder="Search...">
+</div>
+
+<div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
+    <div class="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
+        <table class="table min-w-full" id="employee_list_table">
+            <thead>
+                <tr>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer">Fullname</th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300"></th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer">Email</th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer">Phone</th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer">Created At</th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer">Role</th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer">Salary</th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer">Reporting Line Manager</th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer">Status</th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300"></th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                                hx-get    = "{% url 'user:create_user' %}"
+                                hx-target = "#modalContent"
+                        >
+                          Add User
+                        </button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                {% for user in users %}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                            <div class="text-sm leading-5">{{ user.first_name }} {{ user.last_name }}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                            {% if user.hashed_email_gravatar %}
+                                <img src="https://gravatar.com/avatar/{{ user.hashed_email_gravatar }}?s=50&d=404"/>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user.email }}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user.contact_number }}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user.created_at }}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user.get_role_display }}</td>
+                        {% if user.is_admin %}
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user.salary }}</td>
+                        {% else %}
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">-</td>
+                        {% endif %}
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user.reporting_line_manager.first_name }} {{ user.reporting_line_manager.last_name }}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">
+                            {% if user.is_active %}
+                                <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                <span class="relative text-xs">active</span>
+                            {% else %}
+                                <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                                <span class="relative text-xs">in-active</span>
+                            {% endif %}
+                        </span>
+                        </td>
+                        {% if user.id == logged_in_user or admin_user %}
+                            <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                                <button hx-get    = "{% url 'user:update_user' user.id %}"
+                                        hx-target = "#modalContent"
+                                        class="px-5 py-2 border-blue-500 border rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">Edit</button>
+                            </td>
+                        {% else %}
+                            <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5"></td>
+                        {%  endif %}
+                        <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                                <button hx-get    = "{% url 'user:delete_user' user.id %}"
+                                        hx-target = "#modalContent"
+                                        class="px-5 py-2 border-red-500 border rounded transition duration-300 hover:bg-red-700 hover:text-white focus:outline-none">Delete</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans"></div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    // Select the first <table> element in the document
+    const table = document.querySelector('table');
+
+    // Define a function called sortTable, which takes an element and an optional boolean parameter 'ascending' with a default value of true
+    const sortTable = (element, ascending = true) => {
+        // Create a new DocumentFragment to hold sorted rows before appending them to the table
+        const documentFragment = new DocumentFragment();
+        // Define Unicode characters for arrow symbols
+        const [arrowUp, arrowDown, arrowUpDown] = ['\u2191', '\u2193', '\u21C5'];
+        // Destructure thead and tbody elements from the provided table element
+        const { tHead, tBodies } = element;
+        // Destructure the first tbody from tBodies
+        const [tBody] = tBodies;
+        // Select all header cells within the thead that do not have the attribute data-sortable set to "false"
+        const theadCells = tHead.querySelectorAll('th:not([data-sortable="false"])');
+        // Convert the tbody's rows NodeList into an array
+        const tbodyRows = [...tBody.rows];
+
+        // Create a new Intl.Collator object for string comparison, which is more performant than localeCompare()
+        const { compare } = new Intl.Collator();
+
+        // Define a helper function to get the text content of a cell
+        const getCellValue = cell => {
+            return cell.innerText || cell.textContent;
+        }
+
+        // Define a function to sort the table rows based on the specified column index and sort direction
+        const sort = (index, sortDirection) => {
+            const sortedRows = tbodyRows.sort((a, b) => {
+                const valueA = getCellValue(a.cells[index]);
+                const valueB = getCellValue(b.cells[index]);
+
+                // Check if the cell values are numbers, if so, compare numerically, otherwise, compare as strings
+                return (
+                valueA !== '' &&
+                    valueB !== '' &&
+                    !isNaN(valueA) &&
+                    !isNaN(valueB)
+                  )
+                ? sortDirection
+                    ? valueA - valueB
+                    : valueB - valueA
+                : sortDirection
+                    ? compare(`${valueA}`, `${valueB}`)
+                    : compare(`${valueB}`, `${valueA}`);
+            });
+
+            // Clear the tbody's content
+            while(tBody.firstElementChild) {
+                tBody.removeChild(tBody.lastElementChild);
+            }
+
+            // Append the sorted rows to the DocumentFragment
+            documentFragment.append(...sortedRows);
+            // Append the sorted rows from the DocumentFragment to the tbody
+            tBody.appendChild(documentFragment);
+          }
+
+        // Add a class 'table-sortable' to the table element if it doesn't already have it
+        if (!element.classList.contains('table-sortable')) {
+            element.classList.add('table-sortable');
+        }
+
+        // Iterate through each header cell
+        theadCells.forEach((theadCell, index) => {
+            let isAscending = !ascending;
+
+            // Set the initial sort direction indicator to arrowUpDown for each header cell
+            theadCell.dataset.sortDirection = arrowUpDown;
+
+            // Add a click event listener to each header cell
+            theadCell.addEventListener('click', e => {
+                // Reset the sort direction indicator for all header cells
+                theadCells.forEach(cell => {
+                    if (cell.dataset.sortDirection !== arrowUpDown) {
+                        cell.dataset.sortDirection = arrowUpDown;
+                    }
+              });
+
+              // Toggle the sort direction indicator for the clicked header cell
+              e.target.dataset.sortDirection = isAscending
+                    ? arrowUp
+                    : arrowDown;
+
+              // Call the sort function with the index of the clicked header cell and the current sort direction
+              sort(index, isAscending);
+              // Toggle the sort direction for the next click
+              isAscending = !isAscending;
+            });
+          });
+
+          // Set the sort direction indicator for the first header cell based on the initial ascending parameter
+          theadCells[0].dataset.sortDirection = ascending
+            ? arrowUp
+            : arrowDown;
+          // Sort the table based on the first column by default
+          sort(0, ascending);
+    }
+
+    // Call the sortTable function with the provided table element and initial sorting order (false for descending)
+    sortTable(table, false);
+
+    // Search Filter code
+    function search_table_by_input(inputValue, tableId) {
+        // Get the table element
+        var table = document.getElementById(tableId);
+
+        if (!table) {
+            console.error('Table with id ' + tableId + ' not found');
+            return;
+        }
+
+        // Get all rows of the table
+        var rows = table.getElementsByTagName('tr');
+
+        // Loop through all rows, starting from index 1 (index 0 is usually the header row)
+        for (var i = 1; i < rows.length; i++) {
+            var row   = rows[i];
+            var found = false;
+
+            // Get all cells of the row
+            var cells = row.getElementsByTagName('td');
+
+            // Loop through all cells in the row
+            for (var j = 0; j < cells.length; j++) {
+                var cell      = cells[j];
+                var cell_text = cell.textContent || cell.innerText;
+
+                // Check if the cell text contains the input value
+                if (cell_text.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1) {
+                    found = true;
+                    break;
+                }
+            }
+
+            // If the input value is found, show the row; otherwise, hide it
+            if (found) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    }
+
+    // Listen for input event on the search input field
+    document.getElementById('searchInput').addEventListener('input', function () {
+        var search_input_value = this.value;
+        search_table_by_input(search_input_value, 'employee_list_table');
+    });
+
+</script>
+
+
+{% endblock content %}

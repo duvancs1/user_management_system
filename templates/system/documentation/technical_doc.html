@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-8">
+    <h1 class="text-3xl font-bold mb-4">Technical Document: Architecture of this system</h1>
+
+    <h2 class="text-2xl font-semibold mb-2">Introduction</h2>
+    <p class="mb-4">This document provides an overview of the architecture, design patterns, and technologies employed in the development of this system. The solution is built using Django framework with Python as the backend language, leveraging Django's class-based views for efficient development and maintenance.</p>
+
+    <h2 class="text-2xl font-semibold mb-2">Architecture Overview</h2>
+    <p class="mb-4">This system follows a typical Model-View-Controller (MVC) architecture pattern, which is inherent in Django's design. However, with Django's class-based views, we extend this architecture to a more structured and reusable format. The main components of the architecture include:</p>
+    <ul class="list-disc ml-8 mb-4">
+        <li><strong>Models:</strong> Defines the data structure of the application using Django's Object Relational Mapping (ORM) system.</li>
+        <li><strong>Views:</strong> Utilizes Django's class-based views to handle user requests and generate appropriate responses.</li>
+        <li><strong>Templates:</strong> Uses HTML templates to render the presentation layer of the application.</li>
+        <li><strong>URLs:</strong> Maps URLs to corresponding views using Django's URL routing mechanism.</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold mb-2">Design Patterns Used</h2>
+    <p class="mb-4"><strong>1. Model-View-Template (MVT)</strong></p>
+    <p class="mb-4">The MVT pattern is central to Django's architecture and ensures a clear separation of concerns between data models, views, and templates. This separation enhances maintainability and scalability of the application.</p>
+    <p class="mb-4"><strong>2. Class-Based Views</strong></p>
+    <p class="mb-4">Class-based views in Django provide a more organized and reusable way to handle HTTP requests compared to function-based views. They promote code reusability, modularity, and make it easier to extend and customize views.</p>
+    <p class="mb-4"><strong>3. Object-Relational Mapping (ORM)</strong></p>
+    <p class="mb-4">Django's ORM abstracts database access and manipulation through Python objects, reducing the need for writing SQL queries directly. This simplifies database interactions and enhances portability across different database backends.</p>
+
+    <h2 class="text-2xl font-semibold mb-2">Technologies Used</h2>
+    <ul class="list-disc ml-8 mb-4">
+        <li><strong>Django:</strong> A high-level Python web framework that encourages rapid development and clean, pragmatic design.</li>
+        <li><strong>Python:</strong> A versatile and powerful programming language known for its simplicity and readability, used for backend logic.</li>
+        <li><strong>HTML/Tailwind/htmx/CSS/JavaScript:</strong> Frontend technologies for creating user interfaces and enhancing user experience.</li>
+        <li><strong>SQLite:</strong> Database backends supported by Django for storing application data.</li>
+    </ul>
+
+    <h2 class="text-2xl font-semibold mb-2">Justification</h2>
+    <p class="mb-4"><strong>1. Django Framework</strong></p>
+    <p class="mb-4">Django was chosen for its robust features, extensive documentation, and large community support. Its built-in functionalities such as authentication, admin interface, and ORM significantly accelerated development and reduced boilerplate code.</p>
+    <p class="mb-4"><strong>2. Class-Based Views</strong></p>
+    <p class="mb-4">Class-based views were preferred over function-based views due to their inherent re-usability, readability, and the ability to leverage mixins for additional functionality. This approach simplified the implementation of complex views and promoted a cleaner codebase.</p>
+    <p class="mb-4"><strong>3. Python as Backend Language</strong></p>
+    <p class="mb-4">Python's simplicity, readability, and vast ecosystem of libraries made it an ideal choice for implementing the backend logic of the application. Its ease of use allowed for rapid prototyping and iteration, leading to faster development cycles.</p>
+    <p class="mb-4"><strong>4. Use of ORM</strong></p>
+    <p class="mb-4">The Django ORM abstracted away the complexities of database interaction, allowing developers to focus on business logic rather than SQL syntax. This facilitated portability across different database backends and simplified database management tasks.</p>
+
+    <h2 class="text-2xl font-semibold mb-2">Conclusion</h2>
+    <p class="mb-4">The architecture of this system is built on Django with Python as the backend language, utilizing class-based views, and ORM reflects a well-structured, maintainable, and scalable solution. By leveraging these technologies and design patterns, we ensure the development of a robust web application that meets both functional and non-functional requirements effectively.</p>
+</div>
+
+{% endblock content %}
