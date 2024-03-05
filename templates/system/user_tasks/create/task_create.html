@@ -1,0 +1,8 @@
+{% load crispy_forms_tags %}
+
+<div>
+    <form class="flex flex-col gap-5" hx-post="{% url 'user_tasks:create' %}">
+        {% csrf_token %}
+        {% crispy form %}
+    </form>
+</div>

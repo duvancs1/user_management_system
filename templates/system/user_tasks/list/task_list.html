@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="mx-auto bg-white p-6 rounded-md shadow-md mb-0.5">
+    <input id="searchInput" type="text"
+        class="w-full px-4 py-2 bg-gray-200 focus:bg-white border border-gray-300 rounded-md outline-none"
+        placeholder="Search...">
+</div>
+
+<div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
+    <div class="align-middle inline-block min-w-full shadow overflow-hidden bg-white shadow-dashboard px-8 pt-3 rounded-bl-lg rounded-br-lg">
+        <table class="table min-w-full" id="employee_list_table">
+            <thead>
+                <tr>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer">User</th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer">Status</th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer">Description</th>
+
+                    <th class="px-6 py-3 border-b-2 border-gray-300">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                                hx-get    = "{% url 'user_tasks:create' %}"
+                                hx-target = "#modalContent"
+                        >
+                          Add Task
+                        </button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                {% for user_task in user_tasks %}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
+                            <div class="text-sm leading-5">{{ user_task.user.first_name }} {{ user_task.user.last_name }}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user_task.get_status_display }}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user_task.description }}</td>
+                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5"></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+      <div class="sm:flex-1 sm:flex sm:items-center sm:justify-between mt-4 work-sans"></div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    // Search Filter code
+    function search_table_by_input(inputValue, tableId) {
+        // Get the table element
+        var table = document.getElementById(tableId);
+
+        if (!table) {
+            console.error('Table with id ' + tableId + ' not found');
+            return;
+        }
+
+        // Get all rows of the table
+        var rows = table.getElementsByTagName('tr');
+
+        // Loop through all rows, starting from index 1 (index 0 is usually the header row)
+        for (var i = 1; i < rows.length; i++) {
+            var row   = rows[i];
+            var found = false;
+
+            // Get all cells of the row
+            var cells = row.getElementsByTagName('td');
+
+            // Loop through all cells in the row
+            for (var j = 0; j < cells.length; j++) {
+                var cell      = cells[j];
+                var cell_text = cell.textContent || cell.innerText;
+
+                // Check if the cell text contains the input value
+                if (cell_text.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1) {
+                    found = true;
+                    break;
+                }
+            }
+
+            // If the input value is found, show the row; otherwise, hide it
+            if (found) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    }
+
+    // Listen for input event on the search input field
+    document.getElementById('searchInput').addEventListener('input', function () {
+        var search_input_value = this.value;
+        search_table_by_input(search_input_value, 'employee_list_table');
+    });
+
+</script>
+
+
+{% endblock content %}
