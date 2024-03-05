@@ -16,7 +16,7 @@
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer">User</th>
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer">Status</th>
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer">Description</th>
-
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 tracking-wider hover:bg-gray-100 cursor-pointer"></th>
                     <th class="px-6 py-3 border-b-2 border-gray-300">
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                                 hx-get    = "{% url 'user_tasks:create' %}"
@@ -40,6 +40,15 @@
                                 <button hx-get    = "{% url 'user_tasks:update' user_task.id %}"
                                         hx-target = "#modalContent"
                                         class="px-5 py-2 border-blue-500 border rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">Edit</button>
+                            </td>
+                        {% else %}
+                            <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5"></td>
+                        {%  endif %}
+                        {% if user_task.user.id == logged_in_user or admin_user %}
+                            <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                                <button hx-get    = "{% url 'user_tasks:delete' user_task.id %}"
+                                        hx-target = "#modalContent"
+                                        class="px-5 py-2 border-red-500 border rounded transition duration-300 hover:bg-red-700 hover:text-white focus:outline-none">Delete</button>
                             </td>
                         {% else %}
                             <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5"></td>

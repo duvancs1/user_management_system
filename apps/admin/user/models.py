@@ -20,9 +20,13 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, email, password=None, **extra_fields):
         extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_staff', True)
 
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser=True.'))
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError(_('Superuser must have is_staff=True.'))
 
         return self.create_user(email, password, **extra_fields)
 
@@ -55,6 +59,7 @@ class User(AuditFields, AbstractBaseUser, PermissionsMixin):
     birth_date             = models.DateField(null=True, blank=True)
 
     is_active              = models.BooleanField(default=True)
+    is_staff               = models.BooleanField(default=False)
     is_admin               = models.BooleanField(default=False)
 
     salary                 = models.DecimalField(verbose_name='Salary', default=0, max_digits=9, decimal_places=2)
