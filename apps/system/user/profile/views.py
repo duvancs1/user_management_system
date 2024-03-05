@@ -44,10 +44,6 @@ class UserProfileView(LoginRequiredMixin, View):
 
         form = UserProfileForm(request.POST, instance=user)
 
-        if not validate_lib.check_current_user(self, form, user):
-            messages.success(self.request, 'Error: Cannot Deactivate currently logged in user')
-            return HttpResponseClientRefresh()
-
         if not form.is_valid():
             return render(
                 self.request,
@@ -57,6 +53,11 @@ class UserProfileView(LoginRequiredMixin, View):
                     'form' : form
                 }
             )
+
+        if form.is_valid():
+            if not validate_lib.check_current_user(self, form, user):
+                messages.success(self.request, 'Error: Cannot Deactivate currently logged in user')
+                return HttpResponseClientRefresh()
 
         form.save()
 
