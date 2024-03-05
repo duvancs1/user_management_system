@@ -16,6 +16,10 @@ class TaskUpdateForm(forms.ModelForm):
             'description'
         ]
 
+        labels = {
+            'user': 'Assigned To',
+        }
+
     @property
     def helper(self):
 
@@ -35,7 +39,7 @@ class TaskUpdateForm(forms.ModelForm):
             ),
             Submit(
                 "create-btn",
-                "Create Task",
+                "Update Task",
                 css_class="cursor-pointer py-2 bg-blue-500 text-white font-semibold uppercase hover:bg-blue-500/80 duration-200 rounded hover:drop-shadow-xl tracking-tight self-end px-5",
             ),
         )

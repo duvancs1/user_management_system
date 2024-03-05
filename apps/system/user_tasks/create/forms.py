@@ -16,6 +16,10 @@ class TaskCreateForm(forms.ModelForm):
             'description'
         ]
 
+    labels = {
+        'user': 'Assigned To',
+    }
+
     @property
     def helper(self):
 
