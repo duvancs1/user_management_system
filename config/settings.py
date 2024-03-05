@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
 
     'apps.admin.user',
+    'apps.admin.user_tasks',
     "crispy_forms",
     "crispy_tailwind",
     "django_htmx",
