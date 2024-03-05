@@ -41,7 +41,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500">
                             {% if user.hashed_email_gravatar %}
-                                <img src="https://gravatar.com/avatar/{{ user.hashed_email_gravatar }}?s=50&d=404"/>
+                                <img class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="https://gravatar.com/avatar/{{ user.hashed_email_gravatar }}?s=50&d=404" alt="Bordered avatar">
                             {% endif %}
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user.email }}</td>

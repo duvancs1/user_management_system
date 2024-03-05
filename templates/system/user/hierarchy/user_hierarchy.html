@@ -12,7 +12,9 @@
                 <div class="flex justify-between items-center">
                     <div>
                         <h2 class="text-lg font-bold inline">{{ manager.first_name }} {{ manager.last_name }}</h2>
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
+                        <button hx-get    = "{% url 'user:update_user' manager.id %}"
+                                hx-target = "#modalContent"
+                                class="px-5 py-2 border-blue-500 border rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">
                             Edit
                         </button>
                     </div>
