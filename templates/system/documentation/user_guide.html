@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="max-w-2xl mx-auto">
+
+    <h1 class="text-2xl font-semibold mb-4">Website Documentation</h1>
+
+    <h2 class="text-xl font-semibold mb-2">Sign In/Create Account</h2>
+    <ol class="list-decimal pl-6 mb-4">
+        <li>Visit the website's homepage.</li>
+        <li>Click on the "Sign In" link or "Create Account" link.</li>
+        <li>Fill in the required information for signing up or log in if you already have an account.</li>
+        <li>Upon successful authentication, you will be redirected to the home page.</li>
+    </ol>
+
+    <h2 class="text-xl font-semibold mb-2">Navigation</h2>
+    <ul class="list-disc pl-6 mb-4">
+        <li>The navbar on the left-hand side of the page contains links to:
+            <ul class="list-disc pl-6">
+                <li>Employee</li>
+                <li>Employee - Hierarchy</li>
+                <li>Technical Documentation</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2 class="text-xl font-semibold mb-2">Home Page</h2>
+    <ul class="list-disc pl-6 mb-4">
+        <li>On the home page, you will find quick links to the following features:
+            <ul class="list-disc pl-6">
+                <li>Add Employee</li>
+                <li>Employee - List</li>
+                <li>Employee - Hierarchy</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2 class="text-xl font-semibold mb-2">Adding an Employee</h2>
+    <ol class="list-decimal pl-6 mb-4">
+        <li><strong>From the Home Page:</strong>
+            <ul class="list-disc pl-6">
+                <li>Click on the "Add Employee" button.</li>
+                <li>This action will open a modal popup prompting you to fill in the required fields for creating a user.</li>
+                <li>Here you can also set the reporting line manager, which would affect the employee hierarchy.</li>
+            </ul>
+        </li>
+        <li><strong>From Employee List:</strong>
+            <ul class="list-disc pl-6">
+                <li>Navigate to the Employee List.</li>
+                <li>Click on the "Add User" button located at the top right corner of the page.</li>
+                <li>Fill in the necessary details in the modal popup that appears.</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h2 class="text-xl font-semibold mb-2">Admin User Creation</h2>
+    <ul class="list-disc pl-6 mb-4">
+        <li>While adding a user, there is an option to create an admin user.</li>
+        <li>Check the designated tick box to designate the user as an admin.</li>
+        <li>Admin users have access to view all employee data, edit any employee information, and view salary details.</li>
+    </ul>
+
+    <h2 class="text-xl font-semibold mb-2">Editing User Information</h2>
+    <ul class="list-disc pl-6 mb-4">
+        <li><strong>For Regular Users:</strong>
+            <ul class="list-disc pl-6">
+                <li>Navigate to the Employee List.</li>
+                <li>Find the user whose information you want to edit.</li>
+                <li>Click on the "Edit" button located at the far right.</li>
+                <li>Update the user's details as needed.</li>
+            </ul>
+        </li>
+        <li><strong>For Admin Users:</strong>
+            <ul class="list-disc pl-6">
+                <li>Admin users have the privilege to edit all user information.</li>
+                <li>Follow the same steps as for regular users to edit any employee's information.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2 class="text-xl font-semibold mb-2">Deleting a User</h2>
+    <ul class="list-disc pl-6 mb-4">
+        <li><strong>Note:</strong> Only an admin user can delete users.</li>
+        <li>From the Employee List screen:
+            <ul class="list-disc pl-6">
+                <li>Locate the user you wish to delete.</li>
+                <li>Next to the "Edit" button, you'll find a "Delete" button.</li>
+                <li>Click on the "Delete" button to remove the user from the system.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2 class="text-xl font-semibold mb-2">Employee List</h2>
+    <ul class="list-disc pl-6 mb-4">
+        <li>An avatar will display if you have a <a href="https://gravatar.com/" class="text-blue-600 underline" target="_blank">Gravatar account</a>.</li>
+    </ul>
+
+    <h2 class="text-xl font-semibold mb-2">Employee Hierarchy</h2>
+    <ul class="list-disc pl-6 mb-4">
+        <li>The top-level employee will be at the top of the hierarchy, with people who report to them listed underneath.</li>
+    </ul>
+
+</div>
+
+{% endblock content %}

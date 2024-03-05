@@ -48,7 +48,7 @@
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user.contact_number }}</td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user.created_at }}</td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user.get_role_display }}</td>
-                        {% if user.is_admin %}
+                        {% if admin_user %}
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user.salary }}</td>
                         {% else %}
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">-</td>
@@ -75,11 +75,15 @@
                         {% else %}
                             <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5"></td>
                         {%  endif %}
+                        {% if admin_user %}
                         <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
                                 <button hx-get    = "{% url 'user:delete_user' user.id %}"
                                         hx-target = "#modalContent"
                                         class="px-5 py-2 border-red-500 border rounded transition duration-300 hover:bg-red-700 hover:text-white focus:outline-none">Delete</button>
                         </td>
+                        {% else %}
+                            <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5"></td>
+                        {%  endif %}
                     </tr>
                 {% endfor %}
             </tbody>
