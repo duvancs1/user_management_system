@@ -16,7 +16,9 @@ class UserListView(LoginRequiredMixin, View):
             self.request,
             template_name = 'system/user_tasks/list/task_list.html',
             context       = {
-                'user_tasks'          : user_tasks,
+                'user_tasks'     : user_tasks,
+                'logged_in_user' : self.request.user.id,
+                'admin_user'     : self.request.user.is_admin
             }
         )
 

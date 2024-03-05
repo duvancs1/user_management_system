@@ -35,7 +35,15 @@
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user_task.get_status_display }}</td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5">{{ user_task.description }}</td>
-                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-500 text-sm leading-5"></td>
+                        {% if user_task.user.id == logged_in_user or admin_user %}
+                            <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5">
+                                <button hx-get    = "{% url 'user_tasks:update' user_task.id %}"
+                                        hx-target = "#modalContent"
+                                        class="px-5 py-2 border-blue-500 border rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">Edit</button>
+                            </td>
+                        {% else %}
+                            <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-500 text-sm leading-5"></td>
+                        {%  endif %}
                     </tr>
                 {% endfor %}
             </tbody>
